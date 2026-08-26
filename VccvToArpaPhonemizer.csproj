@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>VccvToArpaPhonemizer</AssemblyName>
+    <RootNamespace>VccvToArpa</RootNamespace>
+    <Version>0.1.0</Version>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(OpenUtauRoot)/OpenUtau.Core/OpenUtau.Core.csproj"
+                      Condition="'$(OpenUtauRoot)' != ''" />
+    <Reference Include="OpenUtau.Core" Condition="'$(OpenUtauRoot)' == ''">
+      <HintPath>$(MSBuildProjectDirectory)/lib/OpenUtau.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Serilog" Condition="'$(OpenUtauRoot)' == ''">
+      <HintPath>$(MSBuildProjectDirectory)/lib/Serilog.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <EmbeddedResource Include="vccv-to-arpa.template.yaml"
+                      LogicalName="VccvToArpa.vccv-to-arpa.template.yaml" />
+  </ItemGroup>
+</Project>
