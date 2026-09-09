@@ -1,3 +1,44 @@
+# VCCVtoARPA v0.1.1 — OpenUtau v0.1.569.0対応版
+
+## 対応と導入
+
+この版はOpenUtau v0.1.569.0向けです。v0.1.568以前とのDLL互換性は保証しません。
+EN ARPA LITEやDeltaCVVCtoARPAとは別のフォネマイザーです。
+
+1. OpenUtauを終了します。
+2. 現在使用中のPluginsフォルダーのVccvToArpaPhonemizer.dllを、このZIPの同名DLLで上書きします。
+3. OpenUtauを起動し、EN VCCV2ARPAを選択します。説明名はVCCVtoARPA Phonemizer v0.1.1です。
+4. Cz式VCCVのUST/USTXとARPAsing音源で変換・再生を確認してください。
+
+既存のvccv-to-arpa.yamlは保持してください。新規導入時は内蔵テンプレートから生成されます。
+OpenUtau.Core.dllなどの本体DLLをPluginsへ追加しないでください。
+
+## 変更点
+
+- v0.1.569のnullable toneShift APIへ対応。
+- ノートのtoneShift / voiceColor / alternate未指定時にトラック既定値を参照。
+- v0.1.569公式配布のOpenUtau.Coreを参照して再コンパイル。
+- プロジェクトの対象フレームワークを.NET 10へ更新。
+- VCCV記号対応表、識別子、独立設定ファイル名は維持。
+
+## 検証範囲
+
+公式Linux x64 v0.1.569-betaの実DLLでコンパイル・外部読み込み・回帰テストを実施。
+合成OTOを使った変換試験で -hE / E l / lO / O - の変換と、未設定属性の処理が成功。
+既存回帰試験も合格。Windows GUIでの起動、実音源の聴感は未確認。
+全OpenUtauバージョンへの対応を保証するものではありません。
+
+## ソースからビルド
+
+.NET 10 SDKを使用し、v0.1.569のOpenUtau.Core.dllとSerilog.dllをsrc/libへ置いて、
+`dotnet build src/VccvToArpaPhonemizer.csproj -c Release`を実行してください。
+参照DLLは配布ZIPには含めていません。
+
+公式リリース: https://github.com/openutau/OpenUtau/releases/tag/0.1.569-beta
+
+---
+以下は旧版の機能説明です。旧版の対応環境・検証記載より上記を優先してください。
+
 # VCCVtoARPA Phonemizer v0.1.0
 
 OpenUtauでCz式英語VCCVのUST/USTX歌詞を読み、ARPAsing音源用のエイリアスへ

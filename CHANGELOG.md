@@ -1,3 +1,8 @@
+# v0.1.1
+- OpenUtau v0.1.569.0 API / .NET 10対応。
+- toneShiftのnullable化とトラック属性の継承へ対応。
+- 公式0.1.569-beta本体DLLによる外部読み込みと合成OTO回帰試験に合格。
+
 # Changelog
 
 ## 0.1.0 - 2026-08-23
