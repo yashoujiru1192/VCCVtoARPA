@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>VccvToArpaPhonemizer</AssemblyName>
     <RootNamespace>VccvToArpa</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 

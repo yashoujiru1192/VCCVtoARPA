@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using OpenUtau.Api;
@@ -398,11 +398,10 @@ namespace VccvToArpa {
             int noteIndex = 0;
             for (int i = 0; i < phonemes.Count; i++) {
                 var attr = notes[0].phonemeAttributes?.FirstOrDefault(attr => attr.index == i) ?? default;
-                // OpenUtau 0.1.568 ABI: toneShift is a non-nullable int and the
-                // parent-expression fallback helpers do not exist yet.
-                string alt = attr.alternate?.ToString() ?? string.Empty;
-                string color = attr.voiceColor;
-                int toneShift = attr.toneShift;
+                // OpenUtau 0.1.569: unset note attributes inherit track defaults.
+                string alt = (attr.alternate ?? GetParentAlternate())?.ToString() ?? string.Empty;
+                string color = attr.voiceColor ?? GetParentVoiceColor();
+                int toneShift = attr.toneShift ?? GetParentToneShift();
                 var phoneme = phonemes[i];
                 while (noteIndex < notes.Length - 1 && notes[noteIndex].position - notes[0].position < phoneme.position) {
                     noteIndex++;
@@ -1087,9 +1086,9 @@ namespace VccvToArpa {
         /// <returns></returns>
         protected virtual string[] HandleWordNotFound(Note note) {
             var attr = note.phonemeAttributes?.FirstOrDefault(attr => attr.index == 0) ?? default;
-            string alt = attr.alternate?.ToString() ?? string.Empty;
-            string color = attr.voiceColor;
-            int toneShift = attr.toneShift;
+            string alt = (attr.alternate ?? GetParentAlternate())?.ToString() ?? string.Empty;
+            string color = attr.voiceColor ?? GetParentVoiceColor();
+            int toneShift = attr.toneShift ?? GetParentToneShift();
             var mpdlyric = MapPhoneme(note.lyric, note.tone + toneShift, color, alt, singer);
             if(HasOto(mpdlyric, note.tone)){
                 error = mpdlyric;

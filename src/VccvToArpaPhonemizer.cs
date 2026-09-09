@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 
 namespace VccvToArpa {
-    [Phonemizer("VCCVtoARPA Phonemizer v0.1.0", "EN VCCV2ARPA", "ヤソウ汁 / based on Cadlaxa ARPA+", language: "EN")]
+    [Phonemizer("VCCVtoARPA Phonemizer v0.1.1", "EN VCCV2ARPA", "ヤソウ汁 / based on Cadlaxa ARPA+", language: "EN")]
     /// <summary>
     /// Converts pre-phonemized Cz-style English VCCV aliases into ARPAsing
     /// transitions. This is a separate phonemizer and does not register as
@@ -302,9 +302,9 @@ namespace VccvToArpa {
 
         protected override Result ProcessBoundaryNote(Note note) {
             var attr = note.phonemeAttributes?.FirstOrDefault(item => item.index == 0) ?? default;
-            var alt = attr.alternate?.ToString() ?? string.Empty;
-            var color = attr.voiceColor;
-            var tone = note.tone + attr.toneShift;
+            var alt = (attr.alternate ?? GetParentAlternate())?.ToString() ?? string.Empty;
+            var color = attr.voiceColor ?? GetParentVoiceColor();
+            var tone = note.tone + (attr.toneShift ?? GetParentToneShift());
 
             // Only emit a breath when the singer really provides an exact br
             // alias (including mapped color/alternate variants). Never let the
