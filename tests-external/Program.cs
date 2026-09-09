@@ -81,3 +81,10 @@ if (!aliases.Any(alias => alias?.Split(' ', StringSplitOptions.RemoveEmptyEntrie
 Console.WriteLine($"Loaded external type: {type.FullName}");
 Console.WriteLine($"-hE -> {string.Join(", ", aliases)}");
 Console.WriteLine("External DLL test passed.");
+
+notes[0].phonemeAttributes = null;
+var inherited = phonemizer.Process(notes, null, null, null, null, Array.Empty<Phonemizer.Note>());
+if (!inherited.phonemes.Any(p => p.phoneme == "hh iy")) {
+    throw new Exception("Unset 0.1.569 attributes did not resolve hh iy.");
+}
+Console.WriteLine("Nullable/unset attributes test passed.");
